@@ -26,7 +26,7 @@ startButton.addEventListener("click", () => {
   questionContainer.classList.remove("hide");
 });
 
-// Initialise variables
+// Initialise global variables
 let timer = 5;
 let score = 0;
 
@@ -57,12 +57,34 @@ questions[0].options.forEach((choice) => {
 // ACCEPTANCE CRITERIA
 // GIVEN I am taking a code quiz
 // WHEN I click the start button
+function startGame() {
+  // add logic
+}
+
 // THEN a timer starts and I am presented with a question
+
 // WHEN I answer a question
+function checkAnswer() {
+  // add logic
+}
 // THEN I am presented with another question
 // WHEN I answer a question incorrectly
 // THEN time is subtracted from the clock
+function subtractTime() {
+  // add logic
+}
+
+function playSound(sound) {
+  // add logic
+  // triggers the playing of the correct or incorrect audio file based on answer
+}
+
 // WHEN all questions are answered or the timer reaches 0
 // THEN the game is over
+
 // WHEN the game is over
 // THEN I can save my initials and score
+function addHighScore() {
+  // add logic
+  // push score to an array stored in localStorage with object storing initials and score
+}
