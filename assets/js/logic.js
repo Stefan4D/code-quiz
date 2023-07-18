@@ -15,9 +15,20 @@ const choices = document.getElementById("choices");
 const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
 const finalScore = document.getElementById("final-score");
+const startButton = document.getElementById("start");
+
+// Event handlers
+startButton.addEventListener("click", () => {
+  //   console.log("Hello!");
+  // hide the start-screen
+  startScreen.classList.add("hide");
+  // show the questionContainer
+  questionContainer.classList.remove("hide");
+});
 
 // Initialise variables
 let timer = 5;
+let score = 0;
 
 // include this interval within the core game function WHILE  timer > 0 || numQuestionsRemaining > 0 - can use a copy of the array and use .pop() and then just check the .length property
 setInterval(() => {
@@ -32,6 +43,8 @@ setInterval(() => {
 // add question answer options to the choices div
 // example before creating gameplay loop
 questionContainer.classList.remove("hide");
+questionTitle.innerText = questions[0].question;
+// using below means will need to tear down all content of the choices.innerHTML and start again for next loop
 questions[0].options.forEach((choice) => {
   choices.innerHTML += `<button value='${choice}' id='${questions[0].question}-${choice}'>${choice}</button>`;
 });
