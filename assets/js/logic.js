@@ -19,6 +19,7 @@ const finalScore = document.getElementById("final-score");
 // Initialise variables
 let timer = 5;
 
+// include this interval within the core game function WHILE  timer > 0 || numQuestionsRemaining > 0 - can use a copy of the array and use .pop() and then just check the .length property
 setInterval(() => {
   if (timer > 0) {
     timer -= 1;
@@ -27,6 +28,13 @@ setInterval(() => {
     time.innerText = "Time's up!";
   }
 }, 1000);
+
+// add question answer options to the choices div
+// example before creating gameplay loop
+questionContainer.classList.remove("hide");
+questions[0].options.forEach((choice) => {
+  choices.innerHTML += `<button value='${choice}' id='${questions[0].question}-${choice}'>${choice}</button>`;
+});
 
 // USER STORY
 // AS A coding boot camp student
