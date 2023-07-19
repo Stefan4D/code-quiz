@@ -17,15 +17,34 @@ const endScreen = document.getElementById("end-screen");
 const finalScore = document.getElementById("final-score");
 const startButton = document.getElementById("start");
 
-// Event handlers
+/* 
+
+---------------
+Event handlers
+---------------
+
+*/
+
+// this handles hiding the start screen and showing the questions
 startButton.addEventListener("click", () => {
-  //   console.log("Hello!");
   // hide the start-screen
   startScreen.classList.add("hide");
   // show the questionContainer
   questionContainer.classList.remove("hide");
 });
 
+// this event handler is on the choices container as when trying to set the onclick handler within the forEach logic it continuously through a reference error saying the click handler checkAnswer was not defined
+choices.addEventListener("click", (e) => {
+  console.log(e.target.value);
+});
+
+/* 
+
+----------------
+Global Variables
+----------------
+
+*/
 // Initialise global variables
 let timer = 5;
 let score = 0;
@@ -42,11 +61,11 @@ setInterval(() => {
 
 // add question answer options to the choices div
 // example before creating gameplay loop
-questionContainer.classList.remove("hide");
+// questionContainer.classList.remove("hide");
 questionTitle.innerText = questions[0].question;
 // using below means will need to tear down all content of the choices.innerHTML and start again for next loop
 questions[0].options.forEach((choice) => {
-  choices.innerHTML += `<button value='${choice}' id='${questions[0].question}-${choice}'>${choice}</button>`;
+  choices.innerHTML += `<button value='${choice}' id='${questions[0].id}-${choice}'>${choice}</button>`;
 });
 
 // USER STORY
@@ -64,9 +83,13 @@ function startGame() {
 // THEN a timer starts and I am presented with a question
 
 // WHEN I answer a question
-function checkAnswer() {
+function checkAnswer(e) {
   // add logic
+  // this is the onClick event handler for the choices and needs to compare the current question's correctAnswer property with the answer submitted by the user
+  // use e.target.value
+  console.log(e.target.value);
 }
+
 // THEN I am presented with another question
 // WHEN I answer a question incorrectly
 // THEN time is subtracted from the clock
