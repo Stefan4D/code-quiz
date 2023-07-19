@@ -48,6 +48,11 @@ Global Variables
 // Initialise global variables
 let timer = 5;
 let score = 0;
+const dummyScores = [
+  { name: "Bob", score: 100 },
+  { name: "Sarah", score: 75 },
+];
+localStorage.setItem("highScores", JSON.stringify(dummyScores));
 
 // include this interval within the core game function WHILE  timer > 0 || numQuestionsRemaining > 0 - can use a copy of the array and use .pop() and then just check the .length property
 setInterval(() => {
@@ -110,4 +115,11 @@ function playSound(sound) {
 function addHighScore() {
   // add logic
   // push score to an array stored in localStorage with object storing initials and score
+  const highScores = JSON.parse(localStorage.getItem("highScores"));
+  console.log(highScores);
+  //   highScores.push({ name: "Fred", score: 200 });
+  //   console.log(highScores);
+  //   localStorage.setItem("highScores", JSON.stringify(highScores));
 }
+
+// addHighScore();
