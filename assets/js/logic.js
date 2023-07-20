@@ -36,6 +36,8 @@ startButton.addEventListener("click", () => {
 // this event handler is on the choices container as when trying to set the onclick handler within the forEach logic it continuously through a reference error saying the click handler checkAnswer was not defined
 choices.addEventListener("click", (e) => {
   console.log(e.target.value);
+  //   checkAnswer(e.target.value);
+  // need to pass the ID of the element as well so can parse the question ID?
 });
 
 /* 
