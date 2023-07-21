@@ -4,6 +4,8 @@
 
 - Re-visited the use of default versus named exports and fixed an error where I was using a default export and importing using named syntax
 - Practiced using the .classList.remove() method that had learned on a Net Ninja course previously
+- Learned how to store and retrieve data with localStorage
+- Learned how to sort an array of objects
 
 ## Resources used
 

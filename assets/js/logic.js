@@ -71,6 +71,7 @@ setInterval(() => {
 // questionContainer.classList.remove("hide");
 questionTitle.innerText = questions[0].question;
 // using below means will need to tear down all content of the choices.innerHTML and start again for next loop
+// TODO: Add a custom additional class for the answers buttons to make widths match
 questions[0].options.forEach((choice) => {
   choices.innerHTML += `<button value='${choice}' id='${questions[0].id}-${choice}'>${choice}</button>`;
 });
