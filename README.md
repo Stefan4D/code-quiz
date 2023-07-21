@@ -7,6 +7,7 @@
 - Learned how to store and retrieve data with localStorage
 - Learned how to sort an array of objects
 - Learned that the forEach method also has an index argument / parameter that holds the index within the input array of the current element
+- Learned about moving variables into and out of global scope to make them available across different function in my program to achieve the desired behaviour
 
 ## Resources used
 
