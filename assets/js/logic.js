@@ -114,6 +114,7 @@ function endGame() {
   // * display user score
   // * prompt user for initials
   // * add user score and initials to the high scores (call addHighScore())
+  // TODO: endGame needs to hide the questions so user cannot continue answering more questions after timer runs out
   // TODO: add modal to prompt for user initials
   // TODO: create high score object with user initials and the score achieved
   // TODO: call addHighScore function with that object
@@ -131,7 +132,10 @@ function displayQuestion(questionIndex) {
 
   // add question answer options to the choices div
   // using below means will need to tear down all content of the choices.innerHTML and start again for next loop
-  // TODO: Add a custom additional class for the answers buttons to make widths match
+  // TODO: Add a custom additional class for the answers buttons to make widths match - temporary value of 250px in CSS
+  // TODO: See if there is a better method to remove existing HTML before adding new button options
+  // reset innerHTML first so that when moving from first question to next, it does not add a bunch of extra buttons
+  choices.innerHTML = "";
   questions[questionIndex].options.forEach((choice, index) => {
     choices.innerHTML += `<button value='${index}' id='${questions[questionIndex].id}-${index}'>${choice}</button>`;
   });
