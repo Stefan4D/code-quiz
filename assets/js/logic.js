@@ -16,6 +16,8 @@ const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
 const finalScore = document.getElementById("final-score");
 const startButton = document.getElementById("start");
+const highScoreSubmitButton = document.getElementById("submit-high-score");
+const playerInitials = document.getElementById("initials");
 
 /* 
 
@@ -45,6 +47,11 @@ choices.addEventListener("click", (e) => {
   // console.log(e.target.value);
   checkAnswer(e);
   // need to pass the ID of the element as well so can parse the question ID?
+});
+
+// this event handler adds the user's high score by calling addHighScore
+highScoreSubmitButton.addEventListener("click", () => {
+  addHighScore({ name: playerInitials.value, score: score });
 });
 
 /* 
@@ -118,8 +125,17 @@ function endGame() {
   // TODO: add modal to prompt for user initials
   // TODO: create high score object with user initials and the score achieved
   // TODO: call addHighScore function with that object
+
+  // hide the questionContainer
+  questionContainer.classList.add("hide");
+  // show the endScreen
+  endScreen.classList.remove("hide");
+
+  // display the user's score
+  finalScore.innerText = score;
+
   console.log("endGame called");
-  addHighScore({ name: "TEST HIGH SCORE", score: 100 });
+  // addHighScore({ name: "TEST HIGH SCORE", score: score });
 }
 
 function displayQuestion(questionIndex) {
@@ -156,8 +172,12 @@ function checkAnswer(e) {
   console.log(`Value of e.target.value within checkAnswer: ${e.target.value}`);
 
   // TODO: write function logic
-  if (questions[currentQuestionIndex].correctAnswer === e.target.value) {
+  // ! have to convert correctAnswer to a string because e.target.value is a string
+  if (
+    questions[currentQuestionIndex].correctAnswer.toString() === e.target.value
+  ) {
     score += 10;
+    console.log(score);
   } else {
     // TODO: Need to make it visible to the user that they got the answer wrong and time has been deducted
     // * Could use a temporary floating div/span in the top right hand corner that fades out showing a "-5" next to or below the timer - value would be configured based on time forfeit variable
