@@ -58,6 +58,7 @@ Global Variables
 let timer = 10;
 time.innerText = timer;
 let score = 0;
+let wrongAnswerTimeForfeit = 5;
 let currentQuestionIndex = 0;
 const dummyScores = [
   { name: "Bob", score: 100 },
@@ -124,30 +125,54 @@ function displayQuestion(questionIndex) {
   console.log("displayQuestion called");
   console.log(`Value of currentQuestionIndex is: ${currentQuestionIndex}`);
   console.log(`Value of questionIndex is: ${questionIndex}`);
-  // add question answer options to the choices div
-  // example before creating gameplay loop
-  // questionContainer.classList.remove("hide");
+
+  // add question to the questionTitle heading
   questionTitle.innerText = questions[questionIndex].question;
+
+  // add question answer options to the choices div
   // using below means will need to tear down all content of the choices.innerHTML and start again for next loop
   // TODO: Add a custom additional class for the answers buttons to make widths match
-  questions[questionIndex].options.forEach((choice) => {
-    choices.innerHTML += `<button value='${choice}' id='${questions[questionIndex].id}-${choice}'>${choice}</button>`;
+  questions[questionIndex].options.forEach((choice, index) => {
+    choices.innerHTML += `<button value='${index}' id='${questions[questionIndex].id}-${index}'>${choice}</button>`;
   });
 }
 
 // ? WHEN I answer a question
 function checkAnswer(e) {
   // add logic
+  // TODO: Consider design for function:
+  // * Should function immediately go to next question?
+  // * How is user informed if they got it right or wrong?
+  // * How to play correct or incorrect audio?
+  // * Does user need to click a button to progress to the next question?
+  // ! If the user does click a button to progress to the next question then how to avoid creating a duplicate intervalId in the game?
+
   // this is the onClick event handler for the choices and needs to compare the current question's correctAnswer property with the answer submitted by the user
   // use e.target.value
   console.log(`Value of e.target.value within checkAnswer: ${e.target.value}`);
+
+  // TODO: write function logic
+  if (questions[currentQuestionIndex].correctAnswer === e.target.value) {
+    score += 10;
+  } else {
+    // TODO: Need to make it visible to the user that they got the answer wrong and time has been deducted
+    // * Could use a temporary floating div/span in the top right hand corner that fades out showing a "-5" next to or below the timer - value would be configured based on time forfeit variable
+    subtractTime();
+  }
+
   // TODO: increment currentQuestionIndex here?
+  currentQuestionIndex++;
+
+  // ! below is a hack just to test progression but obviously this just adds a bunch of extra buttons and need to empty out the original buttons first
+  displayQuestion(currentQuestionIndex);
 }
 
 // ? WHEN I answer a question incorrectly
 // ? THEN time is subtracted from the clock
 function subtractTime() {
   // add logic
+  // subtract 5 seconds from the timer
+  timer -= wrongAnswerTimeForfeit;
 }
 
 function playSound(sound) {
