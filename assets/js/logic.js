@@ -62,8 +62,9 @@ Global Variables
 
 */
 // Initialise global variables
-let timer = 10;
+let timer = 30;
 time.innerText = timer;
+let intervalId;
 let score = 0;
 let wrongAnswerTimeForfeit = 5;
 let currentQuestionIndex = 0;
@@ -87,7 +88,7 @@ function startGame() {
   // ? WHEN all questions are answered or the timer reaches 0
   // ? THEN the game is over
   // if check to see if there are any remaining questions or if timer has run out
-  if (currentQuestionIndex >= questions.length || timer <= 0) {
+  if (timer <= 0) {
     // if true the game is over
     clearInterval(intervalId);
     time.innerText = "Game Over!";
@@ -97,7 +98,7 @@ function startGame() {
 
   // ? THEN a timer starts and I am presented with a question
   // this interval sets the core game timer
-  let intervalId = setInterval(() => {
+  intervalId = setInterval(() => {
     if (timer > 0) {
       timer -= 1;
       time.innerText = timer;
@@ -139,6 +140,16 @@ function endGame() {
 }
 
 function displayQuestion(questionIndex) {
+  if (currentQuestionIndex >= questions.length) {
+    // if true the game is over
+    // ! Moved intervalId to be declated in global scope and then set in the playGame function so it can be accessed here
+    clearInterval(intervalId);
+    // ? Should I change this text to something else or hide it in this scenario?
+    time.innerText = "Game Over!";
+    endGame();
+    return;
+  }
+
   console.log("displayQuestion called");
   console.log(`Value of currentQuestionIndex is: ${currentQuestionIndex}`);
   console.log(`Value of questionIndex is: ${questionIndex}`);
@@ -187,7 +198,8 @@ function checkAnswer(e) {
   // TODO: increment currentQuestionIndex here?
   currentQuestionIndex++;
 
-  // ! below is a hack just to test progression but obviously this just adds a bunch of extra buttons and need to empty out the original buttons first
+  // ! below is a hack just to test progression
+  // ! once complete all the questions then this creates an error as there are no questions left so need to check the index against the array length, which is currently done in main loop and not here
   displayQuestion(currentQuestionIndex);
 }
 
