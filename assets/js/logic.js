@@ -42,11 +42,15 @@ startButton.addEventListener("click", () => {
 });
 
 // this event handler is on the choices container as when trying to set the onclick handler within the forEach logic it continuously through a reference error saying the click handler checkAnswer was not defined
+// ! URGENT
+// ! urgently need to fix this!
+// ! URGENT
+// ? resolved?
 // TODO: Need to fix that currently this targets the entire container and can return undefined if anything other than a button is clicked
 choices.addEventListener("click", (e) => {
-  // console.log(e.target.value);
-  checkAnswer(e);
-  // need to pass the ID of the element as well so can parse the question ID?
+  if (e.target.matches("button")) {
+    checkAnswer(e);
+  }
 });
 
 // this event handler adds the user's high score by calling addHighScore
@@ -205,6 +209,13 @@ function checkAnswer(e) {
 
 // ? WHEN I answer a question incorrectly
 // ? THEN time is subtracted from the clock
+// ? possibly rename function to 'penalise'
+// TODO: Create new div DOM element containing the -5 floating beneath the timer
+// TODO: Make the div fade out
+// TODO: div has a unique ID so that multiple penalties could in theory show on screen at the same time
+// TODO: div should float downwards away from the timer as it fades out
+// ? This idea makes me think whether could have another function that adds time to the timer when the answer is correct and has the inverse: a +5 to the timer and a green text div floating upward
+// ? Would need to think about how to remove div elements if too many on screen at one time i.e. multiple penalties and time bonuses on screen at same time in same part of the UI
 function subtractTime() {
   // add logic
   // subtract 5 seconds from the timer
