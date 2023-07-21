@@ -33,6 +33,7 @@ button:hover {
 .choices button {
   display: block;
   /* add additional style here for width of the answer buttons */
+  width: 250px;
 }
 
 input[type="text"] {
