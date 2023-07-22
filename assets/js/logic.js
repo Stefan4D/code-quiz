@@ -17,6 +17,10 @@ const startButton = document.getElementById("start");
 const highScoreSubmitButton = document.getElementById("submit-high-score");
 const playerInitials = document.getElementById("initials");
 
+// Create audio elements for handling offscreen
+const correct = new Audio("./assets/sfx/correct.wav");
+const incorrect = new Audio("./assets/sfx/incorrect.wav");
+
 /* 
 
 ---------------
@@ -177,12 +181,14 @@ function checkAnswer(e) {
   ) {
     score += 10;
     playerFeedback.textContent = "Correct!";
+    correct.play();
     // console.log(score);
   } else {
     // TODO: Need to make it visible to the user that they got the answer wrong and time has been deducted
     // * Could use a temporary floating div/span in the top right hand corner that fades out showing a "-5" next to or below the timer - value would be configured based on time forfeit variable
     subtractTime();
     playerFeedback.textContent = "Incorrect!";
+    incorrect.play();
   }
 
   // TODO: increment currentQuestionIndex here?
