@@ -47,6 +47,7 @@ This has been developed to meet the following Acceptance Criteria:
 - [How to fade out an element in pure JavaScript](https://www.tutorialspoint.com/how-to-add-fade-out-effect-using-pure-javascript#:~:text=We%20can%20add%20a%20fade,once%20the%20opacity%20reaches%200.)
 - [MDN: matches](https://developer.mozilla.org/en-US/docs/Web/API/Element/matches)
 - Net Ninja: Modern JavaScript course (Udemy)
+- [MDN: HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement/Audio)
 
 ## Mark Scheme Compliance
 
