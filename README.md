@@ -8,7 +8,7 @@
 - Learned how to sort an array of objects
 - Learned that the forEach method also has an index argument / parameter that holds the index within the input array of the current element
 - Learned about moving variables into and out of global scope to make them available across different function in my program to achieve the desired behaviour
-- Learned about using .matches() to see if an element matches a CSS selector, which I used to only target buttons within the choices div
+- Learned about using .matches() to see if an element matches a CSS selector, which I used to only target buttons within the choices div. I also learned this is called event delegation.
 
 ## Resources used
 
@@ -21,3 +21,4 @@
 - [Stack Overflow: Get loop counter/index using for…of syntax in JavaScript](https://stackoverflow.com/questions/10179815/get-loop-counter-index-using-for-of-syntax-in-javascript)
 - [How to fade out an element in pure JavaScript](https://www.tutorialspoint.com/how-to-add-fade-out-effect-using-pure-javascript#:~:text=We%20can%20add%20a%20fade,once%20the%20opacity%20reaches%200.)
 - [MDN: matches](https://developer.mozilla.org/en-US/docs/Web/API/Element/matches)
+- Net Ninja: Modern JavaScript course (Udemy)

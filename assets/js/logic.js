@@ -3,9 +3,6 @@
 // import the question set
 import { questions } from "./questions.js";
 
-// console.log(questions.length);
-// console.log(questions[0]);
-
 // grab the DOM elements
 const time = document.getElementById("time");
 const questionContainer = document.getElementById("questions"); // to allow to set the style from hide to visible - programmatically add/remove the class using the .classList.add() and .remove() methods
@@ -41,20 +38,18 @@ startButton.addEventListener("click", () => {
   startGame();
 });
 
-// this event handler is on the choices container as when trying to set the onclick handler within the forEach logic it continuously through a reference error saying the click handler checkAnswer was not defined
-// ! URGENT
-// ! urgently need to fix this!
-// ! URGENT
-// ? resolved?
-// TODO: Need to fix that currently this targets the entire container and can return undefined if anything other than a button is clicked
+// this event handler is on the choices container and uses event delegation to only trigger DOM elements that match the "button" type
 choices.addEventListener("click", (e) => {
   if (e.target.matches("button")) {
     checkAnswer(e);
   }
 });
 
+// ? WHEN the game is over
+// ? THEN I can save my initials and score
 // this event handler adds the user's high score by calling addHighScore
 highScoreSubmitButton.addEventListener("click", () => {
+  // add user score and initials to the high scores
   addHighScore({ name: playerInitials.value, score: score });
 });
 
@@ -66,17 +61,25 @@ Global Variables
 
 */
 // Initialise global variables
-let timer = 30;
+let timer = 120;
 time.innerText = timer;
 let intervalId;
 let score = 0;
-let wrongAnswerTimeForfeit = 5;
+let wrongAnswerTimeForfeit = 10;
 let currentQuestionIndex = 0;
-const dummyScores = [
-  { name: "Bob", score: 100 },
-  { name: "Sarah", score: 75 },
-];
-localStorage.setItem("highScores", JSON.stringify(dummyScores));
+
+/*
+
+----------------
+? Test Variables
+----------------
+
+*/
+// const dummyScores = [
+//   { name: "Bob", score: 100 },
+//   { name: "Sarah", score: 75 },
+// ];
+// localStorage.setItem("highScores", JSON.stringify(dummyScores));
 
 /* 
   ! This is the core gameplay function
@@ -118,45 +121,26 @@ function startGame() {
 }
 
 function endGame() {
-  // ? WHEN the game is over
-  // ? THEN I can save my initials and score
-  // TODO: add end game functionality
-  // * end the game
-  // * clear the interval
-  // * display user score
-  // * prompt user for initials
-  // * add user score and initials to the high scores (call addHighScore())
-  // TODO: endGame needs to hide the questions so user cannot continue answering more questions after timer runs out
-  // TODO: add modal to prompt for user initials
-  // TODO: create high score object with user initials and the score achieved
-  // TODO: call addHighScore function with that object
-
-  // hide the questionContainer
+  // hide the questionContainer as the game is over
   questionContainer.classList.add("hide");
-  // show the endScreen
+  // show the endScreen so the user can enter a high score
   endScreen.classList.remove("hide");
 
   // display the user's score
   finalScore.innerText = score;
 
-  console.log("endGame called");
-  // addHighScore({ name: "TEST HIGH SCORE", score: score });
+  // console.log("endGame called");
 }
 
 function displayQuestion(questionIndex) {
   if (currentQuestionIndex >= questions.length) {
     // if true the game is over
-    // ! Moved intervalId to be declated in global scope and then set in the playGame function so it can be accessed here
+    // ! Moved intervalId to be declared in global scope and then set in the playGame function so it can be accessed here
     clearInterval(intervalId);
-    // ? Should I change this text to something else or hide it in this scenario?
     time.innerText = "Game Over!";
     endGame();
     return;
   }
-
-  console.log("displayQuestion called");
-  console.log(`Value of currentQuestionIndex is: ${currentQuestionIndex}`);
-  console.log(`Value of questionIndex is: ${questionIndex}`);
 
   // add question to the questionTitle heading
   questionTitle.innerText = questions[questionIndex].question;
@@ -182,17 +166,13 @@ function checkAnswer(e) {
   // * Does user need to click a button to progress to the next question?
   // ! If the user does click a button to progress to the next question then how to avoid creating a duplicate intervalId in the game?
 
-  // this is the onClick event handler for the choices and needs to compare the current question's correctAnswer property with the answer submitted by the user
-  // use e.target.value
-  console.log(`Value of e.target.value within checkAnswer: ${e.target.value}`);
-
-  // TODO: write function logic
+  // this is the onClick event handler for the choices and compares the current question's correctAnswer property with the answer submitted by the user (e.target.value)
   // ! have to convert correctAnswer to a string because e.target.value is a string
   if (
     questions[currentQuestionIndex].correctAnswer.toString() === e.target.value
   ) {
     score += 10;
-    console.log(score);
+    // console.log(score);
   } else {
     // TODO: Need to make it visible to the user that they got the answer wrong and time has been deducted
     // * Could use a temporary floating div/span in the top right hand corner that fades out showing a "-5" next to or below the timer - value would be configured based on time forfeit variable
@@ -214,6 +194,7 @@ function checkAnswer(e) {
 // TODO: Make the div fade out
 // TODO: div has a unique ID so that multiple penalties could in theory show on screen at the same time
 // TODO: div should float downwards away from the timer as it fades out
+// ? Would need to track unique ID for each div being created in the DOM so that they can be removed if too many are showing at the same time
 // ? This idea makes me think whether could have another function that adds time to the timer when the answer is correct and has the inverse: a +5 to the timer and a green text div floating upward
 // ? Would need to think about how to remove div elements if too many on screen at one time i.e. multiple penalties and time bonuses on screen at same time in same part of the UI
 function subtractTime() {
@@ -229,10 +210,10 @@ function playSound(sound) {
 
 function addHighScore(newScore) {
   // add logic
-  console.log(newScore);
+  // console.log(newScore);
   // push score to an array stored in localStorage with object storing initials and score
   const highScores = JSON.parse(localStorage.getItem("highScores"));
   highScores.push(newScore);
-  console.log(highScores);
+  // console.log(highScores);
   localStorage.setItem("highScores", JSON.stringify(highScores));
 }
