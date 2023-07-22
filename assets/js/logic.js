@@ -1,4 +1,4 @@
-// This file will contain the application logic for the game including timer, button click event handling, playing associated audio for correct/incorrect and managing the overall game event loop
+// This file contains the application logic for the game including timer, button click event handling, and managing the overall game event loop
 
 // import the question set
 import { questions } from "./questions.js";
@@ -8,6 +8,7 @@ const time = document.getElementById("time");
 const questionContainer = document.getElementById("questions"); // to allow to set the style from hide to visible - programmatically add/remove the class using the .classList.add() and .remove() methods
 const questionTitle = document.getElementById("question-title");
 const choices = document.getElementById("choices");
+const playerFeedback = document.getElementById("feedback");
 
 const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
@@ -51,6 +52,7 @@ choices.addEventListener("click", (e) => {
 highScoreSubmitButton.addEventListener("click", () => {
   // add user score and initials to the high scores
   addHighScore({ name: playerInitials.value, score: score });
+  location.href = "./highscores.html";
 });
 
 /* 
@@ -91,6 +93,7 @@ function startGame() {
   startScreen.classList.add("hide");
   // show the questionContainer
   questionContainer.classList.remove("hide");
+  playerFeedback.classList.remove("hide");
 
   // ? WHEN all questions are answered or the timer reaches 0
   // ? THEN the game is over
@@ -123,6 +126,7 @@ function startGame() {
 function endGame() {
   // hide the questionContainer as the game is over
   questionContainer.classList.add("hide");
+  playerFeedback.classList.add("hide");
   // show the endScreen so the user can enter a high score
   endScreen.classList.remove("hide");
 
@@ -172,11 +176,13 @@ function checkAnswer(e) {
     questions[currentQuestionIndex].correctAnswer.toString() === e.target.value
   ) {
     score += 10;
+    playerFeedback.textContent = "Correct!";
     // console.log(score);
   } else {
     // TODO: Need to make it visible to the user that they got the answer wrong and time has been deducted
     // * Could use a temporary floating div/span in the top right hand corner that fades out showing a "-5" next to or below the timer - value would be configured based on time forfeit variable
     subtractTime();
+    playerFeedback.textContent = "Incorrect!";
   }
 
   // TODO: increment currentQuestionIndex here?
@@ -189,7 +195,6 @@ function checkAnswer(e) {
 
 // ? WHEN I answer a question incorrectly
 // ? THEN time is subtracted from the clock
-// ? possibly rename function to 'penalise'
 // TODO: Create new div DOM element containing the -5 floating beneath the timer
 // TODO: Make the div fade out
 // TODO: div has a unique ID so that multiple penalties could in theory show on screen at the same time
@@ -198,7 +203,6 @@ function checkAnswer(e) {
 // ? This idea makes me think whether could have another function that adds time to the timer when the answer is correct and has the inverse: a +5 to the timer and a green text div floating upward
 // ? Would need to think about how to remove div elements if too many on screen at one time i.e. multiple penalties and time bonuses on screen at same time in same part of the UI
 function subtractTime() {
-  // add logic
   // subtract 5 seconds from the timer
   timer -= wrongAnswerTimeForfeit;
 }
@@ -209,11 +213,9 @@ function playSound(sound) {
 }
 
 function addHighScore(newScore) {
-  // add logic
-  // console.log(newScore);
-  // push score to an array stored in localStorage with object storing initials and score
+  // add score to an array stored in localStorage with object storing initials and score
+  // assigning to new array so as not to mutate original state
   const highScores = JSON.parse(localStorage.getItem("highScores"));
-  highScores.push(newScore);
-  // console.log(highScores);
-  localStorage.setItem("highScores", JSON.stringify(highScores));
+  const newHighScores = highScores ? [...highScores, newScore] : [newScore];
+  localStorage.setItem("highScores", JSON.stringify(newHighScores));
 }
